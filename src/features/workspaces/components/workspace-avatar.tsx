@@ -16,14 +16,18 @@ export const WorkspaceAvatar = ({
     className,
 }: WorkspaceAvatarProps) => {
     if (image) {
-        <div className={cn(
-            "size-10 relative rounded-md overflow-hidden",
-            className,
-        )}>
-            <Image alt={name} src={image} fill className="object-cover"/>
-        </div>
+        // 💡 FIX: Add return here to render the Image component
+        return ( 
+            <div className={cn(
+                "size-10 relative rounded-md overflow-hidden",
+                className,
+            )}>
+                <Image alt={name} src={image} fill className="object-cover"/>
+            </div>
+        )
     }
 
+    // Fallback: This runs ONLY if 'image' is undefined or null
     return (
         <Avatar className={cn(
             "size-10 rounded-md",

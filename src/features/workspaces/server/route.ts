@@ -5,7 +5,7 @@ import { createWorkspaceSchema, updateWorkspaceSchema } from "../schemas";
 
 import { sessionMiddleware } from "@/lib/session-middleware";
 import { DATABASE_ID, IMAGES_BUCKET_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
-import { ID, Query } from "node-appwrite";
+import { ID, Query, Permission, Role } from "node-appwrite";
 import { MemberRole } from "@/features/members/types";
 import { generateInviteCode } from "@/lib/utils";
 import { getMember } from "@/features/members/utils";
@@ -58,6 +58,10 @@ const app = new Hono()
                     IMAGES_BUCKET_ID,
                     ID.unique(),
                     image,
+                    [
+                        // 🚨 Add this line: Allows anyone (guest) to read the file
+                        Permission.read(Role.any()), 
+                    ]
                 )
 
                 const arrayBuffer = await storage.getFileView(
@@ -130,7 +134,7 @@ const app = new Hono()
                     file.$id,
                 )
 
-                uploadImageUrl = `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${IMAGES_BUCKET_ID}/files/${file.$id}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT}`;
+                uploadImageUrl = `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${IMAGES_BUCKET_ID}/files/${file.$id}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
             } else {
                 uploadImageUrl = image
             }
@@ -141,6 +145,7 @@ const app = new Hono()
                 workspaceId,
                 {
                     name,
+                    userId: user.$id,
                     imageUrl: uploadImageUrl
                 }
             )

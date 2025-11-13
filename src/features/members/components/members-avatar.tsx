@@ -13,6 +13,7 @@ export const MemberAvatar = ({
     className,
     fallbackClassName,
 }: MemberAvatarProps) => {
+    return (
         <Avatar className={cn(
             "size-5 transition border border-neutral-300 rounded-full",
             className
@@ -24,5 +25,5 @@ export const MemberAvatar = ({
                 {name.charAt(0).toUpperCase()}
             </AvatarFallback>
         </Avatar>
-    
+    )
 }
