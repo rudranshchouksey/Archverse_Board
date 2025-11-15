@@ -122,8 +122,8 @@ const app = new Hono()
 
                 return {
                    ...task,
-                   project,
-                   assignee 
+                   project: project || null, 
+                   assignee: assignee || null
                 }
             })
 
