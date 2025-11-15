@@ -18,7 +18,7 @@ import {
     FormMessage 
 } from "@/components/ui/form";
 
-import { createProjectSchema } from "../schema";
+import { createProjectFormSchema, createProjectSchema } from "../schema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateProject } from "../api/use-create-project";
@@ -31,6 +31,8 @@ interface CreateProjectFormProps {
     onCancel?: () => void;
 }
 
+type FormValues = z.infer<typeof createProjectFormSchema>;
+
 export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
     const workspaceId = useWorkspaceId()
     const router = useRouter()
@@ -38,27 +40,30 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
 
     const inputRef = useRef<HTMLInputElement>(null);
     
-    const form = useForm<z.infer<typeof createProjectSchema>>({
-        resolver: zodResolver(createProjectSchema.omit({ workspaceId: true })),
-        defaultValues: {
+    const form = useForm<FormValues>({
+            resolver: zodResolver(createProjectFormSchema),
+            defaultValues: {
             name: "",
-        },
-    })
+            image: undefined,
+            },
+        });
 
-    const onSubmit = (values: z.infer<typeof createProjectSchema>) => {
-        const finalValues = {
-            ...values,
-            workspaceId,
-            image: values.image instanceof File ? values.image : "",
-        }
-        
-        mutate({ form: finalValues }, {
+    const onSubmit = (values: FormValues) => {
+    const finalValues = {
+        ...values,
+        workspaceId, // added here
+        };
+
+        mutate(
+        { form: finalValues },
+        {
             onSuccess: ({ data }) => {
-                form.reset();
-                router.push(`/workspaces/${workspaceId}/projects/${data.$id}`)
-            }
-        })
-    }
+            form.reset();
+            router.push(`/workspaces/${workspaceId}/projects/${data.$id}`);
+            },
+        }
+        );
+    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

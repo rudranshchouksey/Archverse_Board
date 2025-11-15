@@ -5,14 +5,14 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { ID, Permission, Query, Role } from "node-appwrite";
 import z from "zod";
-import { createProjectSchema, updateProjectSchema } from "../schema";
+import { createProjectSchema, createProjectServerSchema, updateProjectSchema } from "../schema";
 import { Project } from "../types";
 
 const app = new Hono()
     .post(
         "/",
         sessionMiddleware,
-        zValidator("form", createProjectSchema),
+        zValidator("form", createProjectServerSchema),
         async (c) => {
             const databases = c.get("databases")
             const user = c.get("user")
