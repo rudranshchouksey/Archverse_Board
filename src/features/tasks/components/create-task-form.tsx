@@ -42,17 +42,26 @@ interface CreateTaskFormProps {
     memberOptions: { id: string, name: string }[]
 }
 
+type CreateTaskFormValues = z.infer<typeof createTaskSchema>;
+type FullCreateTaskPayload = z.infer<typeof createTaskSchema>;
+
 export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: CreateTaskFormProps) => {
     const workspaceId = useWorkspaceId()
     const router = useRouter()
     const { mutate, isPending } = useCreateTask()
 
-    const form = useForm<z.infer<typeof createTaskSchema>>({
-            resolver: zodResolver(createTaskSchema.omit({ workspaceId: true })),
-            defaultValues: {
-                workspaceId,
-            },
-        });
+    const form = useForm<CreateTaskFormValues>({
+    // Cast the result of zodResolver to the correct type to satisfy useForm
+    resolver: zodResolver(createTaskSchema) as any, // <- FIX 1: Cast as any or specifically as a Resolver for CreateTaskFormValues
+    defaultValues: {
+        name: "",
+        status: undefined,
+        projectId: "",
+        assigneeId: "",
+        dueDate: undefined,
+        description: "",
+    },
+});
 
     const onSubmit = (values: z.infer<typeof createTaskSchema>) => {
     mutate({ json: { ...values, workspaceId} }, {
