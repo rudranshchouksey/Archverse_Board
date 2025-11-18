@@ -32,7 +32,7 @@ export const DataKanban = ({
     data,
     onChange,
 }: DataKanbanProps) => {
-    const [tasks, setTasks] = useState<TaskStatus>(() => {
+    const [tasks, setTasks] = useState<TasksState>(() => {
         const initialTasks: TasksState = {
             [TaskStatus.BACKLOG]: [],
             [TaskStatus.TODO]: [],
