@@ -5,6 +5,9 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import Link from "next/link";
 import { ChevronRightIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useDeleteTask } from "../api/use-delete-task";
+import { useConfirm } from "@/hooks/use-confirm";
+import { useRouter } from "next/navigation";
 
 interface TaskBreadcrumbsProps {
     project: Project;
@@ -15,10 +18,30 @@ export const TaskBreadcrumbs = ({
     project,
     task
 }: TaskBreadcrumbsProps) => {
+    const router = useRouter()
     const workspaceId = useWorkspaceId()
+
+    const { mutate, isPending } = useDeleteTask()
+    const [ConfirmDialog, confirm] = useConfirm(
+        "Delete task",
+        "This action cannot be undone.",
+        "destructive"
+    )
+
+    const handleDeleteTask = async () => {
+        const ok = await confirm()
+        if (!ok) return
+
+        mutate({ param: { taskId: task.$id } }, {
+            onSuccess: () => {
+                router.push(`/workspaces/${workspaceId}/tasks`)
+            }
+        })
+    }
 
     return (
     <div className="flex items-center gap-x-2">
+        <ConfirmDialog />
         <ProjectAvatar 
             name={project.name}
             image={project.imageUrl}
@@ -34,6 +57,8 @@ export const TaskBreadcrumbs = ({
             {task.name}
         </p>
         <Button
+            onClick={handleDeleteTask}
+            disabled={isPending}
             className="ml-auto"
             variant={"destructive"}
             size={"sm"}
