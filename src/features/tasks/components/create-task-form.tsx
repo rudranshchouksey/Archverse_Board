@@ -56,6 +56,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
     defaultValues: {
         name: "",
         status: undefined,
+        workspaceId,
         projectId: "",
         assigneeId: "",
         dueDate: undefined,
