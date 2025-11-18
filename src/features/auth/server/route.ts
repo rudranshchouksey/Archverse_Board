@@ -9,6 +9,8 @@ import { createAdminClient } from "@/lib/appwrite";
 import { loginSchema, registerSchema } from "../schemas";
 import { AUTH_COOKIE } from "../constants";
 import { sessionMiddleware } from "@/lib/session-middleware";
+import { getMember } from "@/features/members/utils";
+import { DATABASE_ID, WORKSPACES_ID } from "@/config";
 
 const app = new Hono()
     .get(
