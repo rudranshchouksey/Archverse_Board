@@ -40,7 +40,7 @@ export const TaskBreadcrumbs = ({
     }
 
     return (
-    <div className="flex items-center gap-x-2">
+    <div className="flex items-center justify-between gap-x-2">
         <ConfirmDialog />
         <ProjectAvatar 
             name={project.name}

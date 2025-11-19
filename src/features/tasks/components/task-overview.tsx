@@ -18,7 +18,7 @@ export const TaskOverview = ({
     return (
         <div className="flex flex-col gap-y-4 col-span-1">
             <div className="bg-muted rounded-lg p-4">
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-between">
                     <p className="text-lg font-semibold">Overview</p>
                     <Button size={"sm"} variant={"secondary"}>
                         <PencilIcon className="size-4 mr-2" />
