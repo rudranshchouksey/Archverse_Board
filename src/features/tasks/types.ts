@@ -1,5 +1,7 @@
 import { Models } from "node-appwrite";
 
+import { Project as AppwriteProject } from "@/features/projects/types";
+
 export type Project = {
     name: string;
     imageUrl?: string;
@@ -26,6 +28,6 @@ export type Task = Models.Document & {
     position: number;
     dueDate: string;
     description?: string;
-    project?: Project | string | null;
+    project?: AppwriteProject | string | null;
     assignee?: Assignee | string | null;
 }

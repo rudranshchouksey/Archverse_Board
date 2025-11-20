@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 interface EventCardProps {
     title: string;
     assignee: any;
-    project: Project
+    project?: Project | string | null;
     status: TaskStatus;
     id: string;
 }
@@ -52,14 +52,18 @@ export const EventCard = ({
             )}>
                 <p>{title}</p>
                 <div className="flex items-center gap-x-1">
-                    <MemberAvatar 
-                        name={assignee?.name}
-                    />
-                    <div className="size-1 rounded-full bg-neutral-300" />
-                    <ProjectAvatar 
-                        name={project?.name}
-                        image={project?.imageUrl}  
-                    />
+                    {assignee && (
+                        <>
+                            <MemberAvatar name={assignee.name} />
+                            <div className="size-1 rounded-full bg-neutral-300" />
+                        </>
+                    )}
+                    {typeof project === "object" && project && (
+                        <ProjectAvatar 
+                            name={project.name}
+                            image={project.imageUrl}
+                        />
+                    )}
                 </div>
             </div>
         </div>

@@ -115,11 +115,6 @@ const app = new Hono()
                     ]
                 )
 
-                const arrayBuffer = await storage.getFileView(
-                    IMAGES_BUCKET_ID,
-                    file.$id,
-                )
-
                 uploadImageUrl = `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${IMAGES_BUCKET_ID}/files/${file.$id}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
             }
 
@@ -178,11 +173,6 @@ const app = new Hono()
                     IMAGES_BUCKET_ID,
                     ID.unique(),
                     image,
-                )
-
-                const arrayBuffer = await storage.getFileView(
-                    IMAGES_BUCKET_ID,
-                    file.$id,
                 )
 
                 uploadImageUrl = `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${IMAGES_BUCKET_ID}/files/${file.$id}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;

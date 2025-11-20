@@ -14,7 +14,8 @@ import { ProjectAvatar } from "@/features/projects/components/project-avatar"
 import { useCreateProjectModal } from "@/features/projects/hook/use-create-project-modal"
 import { useGetTasks } from "@/features/tasks/api/use-get-tasks"
 import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal"
-import { Project, Task } from "@/features/tasks/types"
+import { Task } from "@/features/tasks/types"
+import { Project } from "@/features/projects/types"
 import { useGetWorkspaceAnalytics } from "@/features/workspaces/api/use-get-workspace-analytics"
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id"
 import { formatDistanceToNow } from "date-fns"
@@ -84,7 +85,7 @@ export const TaskList = ({ data, total }: TaskListProps) => {
                                     <CardContent className="p-4">
                                         <p className="text-lg font-medium truncate">{task.name}</p>
                                         <div className="flex items-center gap-x-2">
-                                            <p>{task.project?.name}</p>
+                                            <p>{(task.project as any)?.name ?? "Unknown"}</p>
                                             <div className="size-1 rounded-full bg-neutral-300" />
                                             <div className="text-sm text-muted-foreground flex items-center">
                                                 <CalendarIcon className="size-3 mr-1" />
