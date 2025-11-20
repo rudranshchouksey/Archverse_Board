@@ -66,16 +66,20 @@ export const MembersList = () => {
     return (
         <Card className="w-full h-full border-none shadow-none">
             <ConfirmDialog />
-            <CardHeader className="flex flex-row items-center gap-x-4 p-7 space-y-8">
-                <Button variant={"secondary"} size={"sm"}>
-                    <Link href={`/workspaces/${workspaceId}`} className="flex ">
+            <CardHeader className="flex flex-row items-center justify-between p-7">
+                <Button variant="secondary" size="sm" asChild>
+                    <Link href={`/workspaces/${workspaceId}`} className="flex items-center">
                         <ArrowLeftIcon className="size-4 mr-2" />
                         Back
                     </Link>
                 </Button>
-                <CardTitle className="text-xl font-bold" >
+
+                <CardTitle className="text-xl font-bold mx-auto">
                     Members list
                 </CardTitle>
+
+                {/* Empty div to balance layout */}
+                <div className="w-12" />
             </CardHeader>
             <div className="px-7">
                 <DottedSeparator />
