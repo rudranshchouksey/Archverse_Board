@@ -99,7 +99,7 @@ export const SignInCard = () => {
             <div className="px-7">
                 <DottedSeparator />
             </div>
-            <CardContent className="p-7 flex felxx-col gap-y-4">
+            <CardContent className="p-7 flex flex-col gap-y-4">
                 <Button 
                     onClick={() => signUpWithGoogle()}
                     variant={"secondary"} 
