@@ -8,6 +8,9 @@ import { TaskBreadcrumbs } from "@/features/tasks/components/task-breadcrumbs"
 import { TaskDescription } from "@/features/tasks/components/task-description"
 import { TaskOverview } from "@/features/tasks/components/task-overview"
 import { useTaskId } from "@/features/tasks/hooks/use-task-id"
+// New Imports
+import { TaskPreview } from "@/features/tasks/components/task-preview"
+import { TaskComments } from "@/features/tasks/components/task-comments"
 
 export const TaskIdClient = () => {
     const taskId = useTaskId()
@@ -25,9 +28,17 @@ export const TaskIdClient = () => {
         <div className="flex flex-col">
             <TaskBreadcrumbs project={data.project} task={data} />
             <DottedSeparator className="my-6" />
+            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <TaskOverview task={data} />
-                <TaskDescription task={data} />
+                <div className="flex flex-col gap-4">
+                    <TaskOverview task={data} />
+                    <TaskPreview task={data} />
+                </div>
+
+                <div className="flex flex-col gap-4">
+                    <TaskDescription task={data} />
+                    <TaskComments task={data} />
+                </div>
             </div>
         </div>
     )

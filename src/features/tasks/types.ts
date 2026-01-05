@@ -30,4 +30,5 @@ export type Task = Models.Document & {
     description?: string;
     project?: AppwriteProject | string | null;
     assignee?: Assignee | string | null;
+    previewImage?: string;
 }

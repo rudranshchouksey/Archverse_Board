@@ -8,7 +8,8 @@ export const createTaskSchema = z.object({
   projectId: z.string().trim().min(1, "Required"),
   dueDate: z.coerce.date(),
   assigneeId: z.string().trim().min(1, "Required"),
-  description: z.string().optional()
+  description: z.string().optional(),
+  previewImage: z.string().optional(),
 }).refine((data) => data.status, {
   message: "Required",
   path: ["status"],
